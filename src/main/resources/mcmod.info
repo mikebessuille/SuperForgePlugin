@@ -1,0 +1,16 @@
+[
+{
+  "modid": "henrysuper",
+  "name": "Henry Super Forge Mod",
+  "description": "Henry's Super Forge Mod for adding really cool stuff",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Henry"],
+  "credits": "Henry",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
