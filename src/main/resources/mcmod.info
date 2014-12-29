@@ -3,7 +3,7 @@
   "modid": "henrysuper",
   "name": "Henry Super Forge Mod",
   "description": "Henry's Super Forge Mod for adding really cool stuff",
-  "version": "${version}",
+  "version": "0.1",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
