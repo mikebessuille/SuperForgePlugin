@@ -1,6 +1,7 @@
 package Henry.Bessuille.Minecraft;
 
 import Henry.Bessuille.Minecraft.Lib.Constants;
+import Henry.Bessuille.Minecraft.blocks.ModBlocks;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -16,7 +17,7 @@ public class SuperForgePlugin
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event )
     {
-
+        ModBlocks.initBlocks();
 
     }
 
