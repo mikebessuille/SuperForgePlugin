@@ -8,9 +8,11 @@ import net.minecraft.block.Block;
 public final class ModBlocks
 {
     public static Block cementBlock;
+    public static Block blastproofGlassBlock;
 
     public static void initBlocks()
     {
-        cementBlock = new CementBlock();
+        cementBlock = new CementBlock( false ); // false for not flammable.
+        blastproofGlassBlock = new BlastproofGlassBlock();
     }
 }
