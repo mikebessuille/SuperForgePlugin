@@ -15,7 +15,7 @@ public class SuperForgePlugin
 {
     // Pre-Init: Adding blocks, items, worldgen, ...
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event )
+    public static void preInit(FMLPreInitializationEvent event )
     {
         ModBlocks.initBlocks();
 

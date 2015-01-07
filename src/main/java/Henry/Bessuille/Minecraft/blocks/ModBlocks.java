@@ -7,8 +7,8 @@ import net.minecraft.block.Block;
  */
 public final class ModBlocks
 {
-    public static Block cementBlock;
-    public static Block blastproofGlassBlock;
+    private static Block cementBlock;
+    private static Block blastproofGlassBlock;
 
     public static void initBlocks()
     {
