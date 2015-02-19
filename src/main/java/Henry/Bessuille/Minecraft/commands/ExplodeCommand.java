@@ -55,13 +55,6 @@ public class ExplodeCommand implements ICommand
         EntityPlayer player;
         World world;
 
-        // TODO:  MIKE:  Why isn't this showing up in KW Analysis?  Is it not running for all modules in the project?
-        float f1 = (float) 1.003;
-        float f2 = (float) 1.004;
-        // KW:  Don't compare floats, because of imprecision.
-        if( f1 == f2 )
-            return;
-
         if(sender instanceof EntityPlayer)
         {
             player = (EntityPlayer)sender;
