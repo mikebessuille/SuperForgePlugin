@@ -2,6 +2,7 @@ package Henry.Bessuille.Minecraft.blocks;
 
 import Henry.Bessuille.Minecraft.Lib.Constants;
 import cpw.mods.fml.common.registry.GameRegistry;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -31,7 +32,7 @@ public class CementBlock extends Block
         setResistance( (float)750.0 );
 
         // Textures (cement.png in assets/henrysuper/textures/blocks folder)
-        this.setBlockName(Constants.MODID + "_" + name );
+        setBlockName(Constants.MODID + "_" + name );
         setBlockTextureName(Constants.MODID + ":" + name );
 
         // Register the new block with the game

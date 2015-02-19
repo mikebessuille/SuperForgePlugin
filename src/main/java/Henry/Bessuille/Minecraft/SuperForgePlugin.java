@@ -2,6 +2,7 @@ package Henry.Bessuille.Minecraft;
 
 import Henry.Bessuille.Minecraft.Lib.Constants;
 import Henry.Bessuille.Minecraft.blocks.ModBlocks;
+import Henry.Bessuille.Minecraft.items.ModItems;
 import Henry.Bessuille.Minecraft.commands.ExplodeCommand;
 
 import cpw.mods.fml.common.Mod;
@@ -27,6 +28,7 @@ public class SuperForgePlugin
         logger = event.getModLog();
 
         ModBlocks.initBlocks();
+        ModItems.initItems();
     }
 
     // Init is for adding TileEntities, events, renderers
@@ -52,4 +54,8 @@ public class SuperForgePlugin
         event.registerServerCommand( new ExplodeCommand() );
     }
 
+    public static Logger getLogger()
+    {
+        return logger;
+    }
 }
