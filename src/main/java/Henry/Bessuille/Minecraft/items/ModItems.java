@@ -1,6 +1,5 @@
 package Henry.Bessuille.Minecraft.items;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 import net.minecraft.block.Block;
@@ -13,11 +12,9 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraft.util.MovingObjectPosition;
+
 
 import java.util.List;
 
@@ -34,7 +31,7 @@ public class ModItems
     }
 
     // Utility class with extended distance.
-    // TODO:  Make this support hitting entities!  Or delete this if getTarget() works!
+    // TODO:  Dead code; delete this since getTarget() works!
     protected static MovingObjectPosition getPositionLongDistance(World world, EntityPlayer player, boolean p_77621_3_)
     {
         float f = 1.0F;
@@ -61,30 +58,12 @@ public class ModItems
     protected static EntityLivingBase getTarget(World world, EntityPlayer player, double distance)
     {
         final float par1 = 1.0F; // partialtick param, something to do with current vs. previous locations?
-        // Minecraft mc = Minecraft.getMinecraft();
-
-
         final double EYE_HEIGHT = 1.62;  // this is a guess... need to confirm it
-
-        /* FROM internet fix
-        Vec3 startPos = this.getPosition(partialTick);
-        if (!world.isRemote) startPos = startPos.addVector(0, EYE_HEIGHT, 0);
-        Vec3 look = this.getLook(partialTick);
-        Vec3 endPos = vec3.addVector(look.xCoord * reachDistance, look.yCoord * reachDistance, look.zCoord * reachDistance);
-        MovingObjectPosition mop = world.func_147447_a(startPos, endPos, false, false, true);
-
-        System.out.println("HitVec:[" + mop.hitVec.xCoord + ", " + mop.hitVec.yCoord + ", " + mop.hitVec.zCoord + "]");
-        */
-
 
         Entity pointedEntity;
         double d0 = distance;
-        // MovingObjectPosition omo = mc.renderViewEntity.rayTrace(d0, par1);
-        // MRB:  replaced with this line:
         MovingObjectPosition omo = player.rayTrace(d0, par1);
         double d1 = d0;
-        // Vec3 startPos = mc.renderViewEntity.getPosition(par1);
-        // Vec3 lookPos = mc.renderViewEntity.getLook(par1);
         Vec3 startPos = player.getPosition(par1);
         // Account for difference between server and client.
         if (!world.isRemote) startPos = startPos.addVector(0, EYE_HEIGHT, 0);
@@ -93,7 +72,6 @@ public class ModItems
         pointedEntity = null;
         Vec3 vec33 = null;
         float f1 = 1.0F;
-        // List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.renderViewEntity, mc.renderViewEntity.boundingBox.addCoord(lookPos.xCoord * d0, lookPos.yCoord * d0, lookPos.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
         List list = world.getEntitiesWithinAABBExcludingEntity( player,
                                                                 player.boundingBox.addCoord( lookPos.xCoord * d0,
                                                                                              lookPos.yCoord * d0,

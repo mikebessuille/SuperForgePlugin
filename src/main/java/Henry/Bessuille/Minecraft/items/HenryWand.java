@@ -1,13 +1,10 @@
 package Henry.Bessuille.Minecraft.items;
 
 import Henry.Bessuille.Minecraft.SuperForgePlugin;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.item.Item;
@@ -27,6 +24,9 @@ import net.minecraft.init.Blocks;
  */
 public class HenryWand extends Item
 {
+    // TODO:  This may be only one instance for ALL items of this type; Look up "NBT"
+    private boolean bItemInUse = false;
+
     public HenryWand()
     {
         super();
@@ -37,7 +37,7 @@ public class HenryWand extends Item
     }
 
 
-    // onItemUse seems to be called when the item is clicked on a block
+    // onItemUse seems to be called when the item is right-clicked on a block nearby
     @Override
     public boolean onItemUse( ItemStack tool, EntityPlayer player, World world,
                               int x, int y, int z,
@@ -46,6 +46,11 @@ public class HenryWand extends Item
 
         if( !world.isRemote )
         {
+            bItemInUse = true;
+            // if we don't set the item in use, then onPlayerStoppedUsing won't get called
+            player.setItemInUse(tool, getMaxItemUseDuration(tool));
+            // SuperForgePlugin.getLogger().info( "[SERVER] WAND: onItemUse()");
+
             if( face != 1)
             {
                 // item was not clicked on the top of a block
@@ -72,11 +77,27 @@ public class HenryWand extends Item
     @Override
     public ItemStack onItemRightClick( ItemStack stack, World world, EntityPlayer player )
     {
-        // TODO: Don't attack with lightning if this is also a "use" event (close to the player!)
+        // Don't attack with lightning if this is also a "use" event (close to the player!)
+        // in that case: onItemUse gets called, then onItemRightClick called on the server only.
+        if( bItemInUse == true )
+        {
+            bItemInUse = false;
+            return( super.onItemRightClick( stack, world, player ));
+        }
+
         EntityLivingBase entityTarget = ModItems.getTarget( world, player, 200.0D );
         if( entityTarget != null )
         {
             // hit an entity, so spawn Lightning (want to do this on both server and client)
+
+            /*
+            if( !world.isRemote)
+            {
+                SuperForgePlugin.getLogger().info( "[SERVER] WAND: Lightning");
+            }
+            else SuperForgePlugin.getLogger().info("[CLIENT] WAND: Lightning");
+            */
+
             EntityLightningBolt bolt = new EntityLightningBolt( world, entityTarget.posX, entityTarget.posY, entityTarget.posZ );
             world.spawnEntityInWorld( bolt );
         }
@@ -142,7 +163,7 @@ public class HenryWand extends Item
 
 
     // This only gets called if the player right-clicks on an entity that is close to him
-    // Need to use onItemRightClick to check if the user is looking at an entity
+    // Need to use onItemRightClick to check if the user is looking at an entity (long distance)
     // TODO: Make this do something different if clicking close, versus how it's handled in onItemRightClick()
     @Override
     public boolean itemInteractionForEntity( ItemStack stack, EntityPlayer player, EntityLivingBase entity )
@@ -166,5 +187,29 @@ public class HenryWand extends Item
         }
         return true;
         // return( super.itemInteractionForEntity( stack, entity );
+    }
+
+
+    /**
+     * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
+     * MRB:  This is never called!  And I'm not sure why!!!! :(
+     */
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemUseCount )
+    {
+        bItemInUse = false;
+        SuperForgePlugin.getLogger().info("WAND: Stopped using");
+        super.onPlayerStoppedUsing( stack, world, player, itemUseCount );
+    }
+
+    /**
+     * How long it takes to use or consume an item.   MRB:  if this is not overridden,
+     * the default is 0 so onPlayerStoppedUsing never gets called.
+     */
+    @Override
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+        // return 72000;  // from ItemBow
+        return 10000;
     }
 }
