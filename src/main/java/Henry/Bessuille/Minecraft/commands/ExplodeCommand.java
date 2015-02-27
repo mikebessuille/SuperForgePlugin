@@ -25,6 +25,8 @@ public class ExplodeCommand implements ICommand
 
     public ExplodeCommand()
     {
+        new String("Puke");     // Keep this here to ensure that KW Analysis is running for this module
+
         this.aliases = new ArrayList();
         this.aliases.add("explode");
         this.aliases.add("exp");

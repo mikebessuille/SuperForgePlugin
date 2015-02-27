@@ -209,6 +209,8 @@ public class HenryWand extends Item
     @Override
     public int getMaxItemUseDuration(ItemStack stack)
     {
+        int nMyUnusedInteger;
+
         // return 72000;  // from ItemBow
         return 10000;
     }
