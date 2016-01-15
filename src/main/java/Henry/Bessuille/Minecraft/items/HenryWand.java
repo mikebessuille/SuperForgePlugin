@@ -1,4 +1,6 @@
 package Henry.Bessuille.Minecraft.items;
+import Henry.Bessuille.Minecraft.entities.BlackFireball;
+
 
 import Henry.Bessuille.Minecraft.SuperForgePlugin;
 import net.minecraft.entity.Entity;
@@ -26,6 +28,7 @@ public class HenryWand extends Item
 {
     // TODO:  This may be only one instance for ALL items of this type; Look up "NBT"
     private boolean bItemInUse = false;
+    private float speed_factor = 0.4F;
 
     public HenryWand()
     {
@@ -116,20 +119,24 @@ public class HenryWand extends Item
                     // if we didn't right-click on a block
 
                     // SuperForgePlugin.getLogger().info( "WAND: RIGHT CLICK");
-                    // TODO:  spawn a new type of black fireball
+                    // TODO:  spawn a new type of black fireball.  Subclass fireball.
 
                     Vec3 look = player.getLookVec();
-                    EntityLargeFireball fireball = new EntityLargeFireball(world, player, 0, 0, 0);
+                    // EntityLargeFireball fireball = new EntityLargeFireball(world, player, 0, 0, 0);
+                    BlackFireball fireball = new BlackFireball(world, player, 0, 0, 0);
                     fireball.setPosition(
                             player.posX + look.xCoord * 2,
                             player.posY + look.yCoord * 2,
                             player.posZ + look.zCoord * 2);
                     // Not sure why, but setVelocity doesn't do the same thing, and there's no
                     // setacceleration method
-                    fireball.accelerationX = look.xCoord * 0.6;
-                    fireball.accelerationY = look.yCoord * 0.6;
-                    fireball.accelerationZ = look.zCoord * 0.6;
+                    fireball.accelerationX = look.xCoord * speed_factor;
+                    fireball.accelerationY = look.yCoord * speed_factor;
+                    fireball.accelerationZ = look.zCoord * speed_factor;
+
                     world.spawnEntityInWorld(fireball);
+                    // This works:  Immediately mount the fireball
+                    // player.mountEntity(fireball);
                 }
                 else
                 {
